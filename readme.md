@@ -22,6 +22,11 @@ Watch the setup video for getting started (select HD display). This video is abo
 
 2. Clone the [Disk91 STM32 IoT SDK repository](https://github.com/disk91/stm32-it-sdk) in the Project root directory to add the needed sdk dependencies. This project has been tested & refied with SDK [Version 1.5](https://github.com/disk91/stm32-it-sdk/releases/tag/v1.5.0) 
 
+## Usage
+
+* A console for debug is accessible on USART2 @ 115000 ; the sigfox stack trace are activated
+* A console for configuration is accessible on USART1 @ 9600 ; type "?" to access the command. "changeme" to access the private extension to modify the configuration.
+
 ## License
 
 This code and ItSdk are under GPLv3. You can use it freely, you can modify, redistribute but *you must* to publish your source code. Other licenses can be obtained by contacting me on [disk91.com](https://www.disk91.com)
