@@ -42,7 +42,7 @@
 // | SDK SETTING                   | USER SELECTED VALUE                  | SETTING DESCRIPTION                   |
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // +------------SIGFOX-------------|--------------------------------------|---------------------------------------|
-#if ITSDK_WITH_SIGFOX_LIB == 1
+#if ITSDK_WITH_SIGFOX_LIB == __ENABLE
 #define ITSDK_SIGFOX_ENCRYPTION		(   __PAYLOAD_ENCRYPT_AESCTR \
 									  | __PAYLOAD_ENCRYPT_SPECK  \
 									 /* | __PAYLOAD_ENCRYPT_SIGFOX */ \
@@ -54,8 +54,8 @@
 #define ITSDK_SIGFOX_NVM_IDBASEADDR	0x200									// Base address in the NVM for EncUtils lib
 #define ITSDK_SIGFOX_LOWPOWER		0										// When 1 the device can be switch to low power by the sigfox lib
 #define ITSDK_SIGFOX_ID				0x00D206AF								// The device ID when NVM_SOURCE is HEADERS
-#define ITSDK_SIGFOX_PAC			{ 0x58, 0x1B, 0xD4, 0x43, \
-									  0x6C, 0xB0, 0x7D, 0xBD }				// The device PAC when NVM_SOURCE is HEADERS
+#define ITSDK_SIGFOX_PAC			{ 0x00, 0x00, 0x00, 0x00, \
+									  0x00, 0x00, 0x00, 0x00 }				// The device PAC when NVM_SOURCE is HEADERS
 #define ITDSK_SIGFOX_RCZ			SIGFOX_RCZ1								// The default RCZ when NVM_SOURCE is HEADERS
 #define ITSDK_SIGFOX_KEY_TYPE		SIGFOX_KEY_PRIVATE						// Type of key to be used SIGFOX_KEY_PRIVATE / SIGFOX_KEY_PUBLIC
 #define ITSDK_SIGFOX_TXPOWER		SIGFOX_DEFAULT_POWER					// Default Tx power in dB - can be replaced by a value in dB

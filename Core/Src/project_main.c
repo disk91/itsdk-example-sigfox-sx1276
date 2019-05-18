@@ -77,10 +77,6 @@ void project_setup() {
 
 	log_info("Tx completed <3 \r\n");
 
-	while(1) {
-		wdg_refresh();
-	}
-
 }
 
 void project_loop() {
