@@ -143,4 +143,14 @@
 #define ITSDK_DRIVERS_ST25DV_SERIALUZ_ZONE		ST25DV_USERZONE_1			// The serial communication module on User Zone is using Zone 2
 #define ITSDK_DRIVERS_ST25DV_SERIALUZ_OFFSET	42							// offset in block (x32b) in the USER Zone 42 = 168
 
+// ------------------------------------------------------------------------
+// Hall : SL353
+
+#define ITSDK_DRIVERS_SL353					__DISABLE
+#if ITSDK_DRIVERS_SL353 == __ENABLE
+	#include <drivers/hall/sl353/sl353.h>
+#endif
+#define ITSDK_DRIVERS_SL353_INT_BANK		__BANK_A						// HALL pin configuration
+#define ITSDK_DRIVERS_SL353_INT_PIN			__LP_GPIO_0						//   __LP_GPIO_NONE if not used
+
 #endif /* INC_IT_SDK_CONFIGDRIVERS_H_ */

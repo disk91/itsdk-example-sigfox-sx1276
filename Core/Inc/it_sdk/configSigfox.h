@@ -56,11 +56,17 @@
 #define ITSDK_SIGFOX_ID				0x00D206AF								// The device ID when NVM_SOURCE is HEADERS
 #define ITSDK_SIGFOX_PAC			{ 0x00, 0x00, 0x00, 0x00, \
 									  0x00, 0x00, 0x00, 0x00 }				// The device PAC when NVM_SOURCE is HEADERS
-#define ITDSK_SIGFOX_RCZ			SIGFOX_RCZ1								// The default RCZ when NVM_SOURCE is HEADERS
 #define ITSDK_SIGFOX_KEY_TYPE		SIGFOX_KEY_PRIVATE						// Type of key to be used SIGFOX_KEY_PRIVATE / SIGFOX_KEY_PUBLIC
 #define ITSDK_SIGFOX_TXPOWER		SIGFOX_DEFAULT_POWER					// Default Tx power in dB - can be replaced by a value in dB
+#define ITSDK_SIGFOX_MAXPOWER		20										// Max power for the board (the stack returns send error when
+																			// power higher than stack supports
 #define ITSDK_SIGFOX_SPEED			SIGFOX_DEFAULT_SPEED					// Default Speed in bps - can be replaced by a value in BPS
 #define ITSDK_SIGFOX_RSSICAL		0										// Default Rssi Calibration
+#define ITSDK_SIGFOX_IF_TX_RCZ1	 	500										// Interframe time for TX Frame
+#define ITSDK_SIGFOX_IF_TX_RCZ3	 	50										// Interframe time for TX Frame
+#define ITSDK_SIGFOX_IF_TXRX_RCZ1 	500										// Interframe time for TX/RX frame
+#define ITSDK_SIGFOX_IF_TXRX_RCZ3 	50										// Interframe time for TX/RX frame
+
 #define ITSDK_SIGFOX_KEY			{ 0x42, 0x39, 0x45, 0x14, \
 									  0xF9, 0x90, 0x16, 0xC3, \
 									  0xA7, 0x33, 0x4A, 0x12, \
@@ -78,7 +84,6 @@
 /*
 #define ITSDK_SIGFOX_PAC			{ 0x00, 0x00, 0x00, 0x00, \
 									  0x00, 0x00, 0x00, 0x00 }				// The device PAC when NVM_SOURCE is HEADERS
-#define ITDSK_SIGFOX_RCZ			0x1										// The default RCZ when NVM_SOURCE is HEADERS
 #define ITSDK_SIGFOX_KEY			{ 0x00, 0x00, 0x00, 0x00, \
 									  0x00, 0x00, 0x00, 0x00, \
 									  0x00, 0x00, 0x00, 0x00, \
@@ -130,6 +135,11 @@
 #define ITSDK_SX1276_TIM_ID			2								   	   // Timer used => Should not be changed
 																		   // Need to b activated in the CubeMx project
 #define ITSDK_SX1276_SPIDMATX		hdma_spi1_tx						   // Associated DMA
+#ifndef ITSDK_MURATA_TCXO_WARMUP
+#define ITSDK_MURATA_TCXO_WARMUP	50									   // Warmup time for TCXO
+#define ITSDK_MURATA_WAKEUP_TIME    53 									   // WakeUp time correction for RX window start at least TCXO Time [ms]
+#endif
+#define ITSDK_SX1276_SFXWAKEUP_TIME 60 								   	   // WakeUp time correction interframe timing (includes TCXO)
 
 #define ITSDK_SX1276_RESET_BANK		 		__BANK_C						   // SX1276 GPIO FOR RESET
 #define ITSDK_SX1276_RESET_PIN		 		__LP_GPIO_0
@@ -150,11 +160,11 @@
 #define ITSDK_SX1276_DIO_5_BANK	 	 		__BANK_A						   // SX1276 GPIO 5 => Mode Ready / Clk out
 #define ITSDK_SX1276_DIO_5_PIN	 	 		__LP_GPIO_4
 #define ITSDK_MURATA_ANTSW_RX_BANK 	     	__BANK_A						   // MURATA ANTENNA SWITCH RX
-#define ITSDK_MURATE_ANTSW_RX_PIN	     	__LP_GPIO_1
+#define ITSDK_MURATA_ANTSW_RX_PIN	     	__LP_GPIO_1
 #define ITSDK_MURATA_ANTSW_TXBOOST_BANK  	__BANK_C						   // MURATA TX POWER BOOST
-#define ITSDK_MURATE_ANTSW_TXBOOST_PIN	 	__LP_GPIO_1
+#define ITSDK_MURATA_ANTSW_TXBOOST_PIN	 	__LP_GPIO_1
 #define ITSDK_MURATA_ANTSW_TXRFO_BANK    	__BANK_C						   // MURATA TX RFO
-#define ITSDK_MURATE_ANTSW_TXRFO_PIN	 	__LP_GPIO_2
+#define ITSDK_MURATA_ANTSW_TXRFO_PIN	 	__LP_GPIO_2
 
 #define ITSDK_SIGFOX_EXTENSIONS				__SIGFOX_NONE					   // Murata sigfox lib does not support Monarch
 #endif																		   // Corresponding Interrupts needs to
