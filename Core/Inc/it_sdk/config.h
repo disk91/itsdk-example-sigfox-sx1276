@@ -33,8 +33,8 @@
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // | SDK SETTING                   | USER SELECTED VALUE                  | SETTING DESCRIPTION                   |
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#define ITSDK_VERSION				"1.4.1-master"							// SDK Version String (do not change it)
-#define ITSDK_VERSION_BYTE			0x14									//  SDK 1 Byte version corresponding to previous on (do not change it)
+#define ITSDK_VERSION				"1.6.0-master"							// SDK Version String (do not change it)
+#define ITSDK_VERSION_BYTE			0x16									//  SDK 1 Byte version corresponding to previous on (do not change it)
 
 #define ITSDK_USER_VERSION			"0.1"									// CHANGE ME - Version of your firwmare
 #define ITSDK_USER_VERSION_BYTE		0x01									// CHANGE ME - Version of your firwmare 4bits MAJOR / 4bits MINOR
@@ -47,6 +47,8 @@
 #define ITSDK_RAM_SIZE				(20*1024)								// RAM Memory size
 #define ITSDK_EPROM_SIZE			(6*1024)								// EEPROM size
 #define ITSDK_WITH_UART				( __UART_USART2 | __UART_USART1 )		// Use LPUART1 and USART2 for debug
+#define ITSDK_WITH_UART_RXIRQ		__UART_USART2							// Setup some of the UART with IRQ enabled for RX
+#define ITSDK_WITH_UART_RXIRQ_BUFSZ 64										// Size of the UART IRQ RX circular buffer (power of 2)
 #define ITSDK_WITH_RTC				__RTC_ENABLED							// The Rtc is usd in the firmware
 #define ITSDK_WITH_CLK_ADJUST		__ENABLE								// The RTC (and wtachdog) is calibrated
 #define ITSDK_RTC_CLKFREQ			32768									// RTC clock source frequency
@@ -54,7 +56,7 @@
 #define ITSDK_CLK_CORRECTION		1000									// correct clock with 1200 o/oo (+20%) of the ticks (used when clk_adjust = 0 or for RTC when CLK_BEST_SRC_RTC)
 #define ITSDK_WITH_ADC				__ADC_ENABLED							// Use of Adc (includes the structures)
 #define ITSDK_ADC_OPTIMIZE_SIZE		__ENABLE								// When __ENABLE adc code is optimized for code size (when relevant)
-#define ITSDK_ADC1_PIN				14										// Map the channel for ADC on PIN 14 (PA0)
+#define ITSDK_ADC1_PIN				65										// Map the channel for ADC on PIN 14 (PA4)
 #define ITSDK_ADC_OVERSAMPLING		16										// Number of ADC read time before averaging
 #define ITSDK_VDD_MV				3300									// VDD value in mV
 #define ITSDK_VBAT_MIN				2000									// MIN value for VBAT in mv
@@ -71,23 +73,29 @@
 #define ITSDK_HW_TIMER1_ID			21										// Timer hadware 1 - id/name
 #define ITSDK_HW_TIMER1_FREQ		32000000								// Primary timer base frequency
 #define ITSDK_HW_TIMER1_MAX			65536									// Timer's counter max value ( 2^size )
-#define ITSDK_TIMER_SLOTS			5										// Maximum number of SOFT TIMER available in parallel - 0 disable SOFT TIMER code
-#define ITSDK_WITH_WDG				__ENABLE								// Allows to disable the watchdog
+#define ITSDK_TIMER_SLOTS			7										// Maximum number of SOFT TIMER available in parallel - 0 disable SOFT TIMER code
+#define ITSDK_WITH_WDG				__WDG_IWDG								// Allows to disable the watchdog
 #define ITSDK_WDG_MS				16000									// WatchDog time out in ms 1 --> 28000 / 0 to disable
 #define ITSDK_WDG_CLKFREQ			37000									// Watchdog clock source frequency
 #define ITSDK_CORE_CLKFREQ			32000000								// Core Frequency of the chip
 #define ITSDK_WITH_EXPERIMENTAL 	__DISABLE								// activate or deactivate some experimental code by default set it to DISABLE
-#define ITSDK_LOGGER_WITH_SEG_RTT 	__DISABLE								// activate or deactive the segger RTT console (see segger.md file)
+#define ITSDK_WITH_GPIO_HANDLER		__ENABLE								// Enable the internal GPIO Handler, when disable you need to map it manually
 
-#define ITSDK_LOGGER_CONF			0x00F0									// error->info level on serial1 => USART2 (see logger.c)
+#define ITSDK_LOGGER_CONF			0x00F0									// error->info level on serial1 => USART2 (see logger.c) (File/Serial1/Serial2/Debug)
+#define ITSDK_LOGGER_WITH_SEG_RTT 	__DISABLE								// activate or deactive the segger RTT console (see segger.md file)
 #define ITSDK_LOGGER_MODULE			( \
 									  __LOG_MOD_NONE		  \
-									| __LOG_MOD_LOWSIGFOX     \
-									| __LOG_MOD_STKSIGFOX     \
-								/*	| __LOG_MOD_STKLORA   */  \
-								/*	| __LOG_MOD_STIMER    */  \
+								/*	| __LOG_MOD_LOWPOWER   */ \
+								/*	| __LOG_MOD_STATEMINF  */ \
+								/*	| __LOG_MOD_STATEMDBG  */ \
+								/*	| __LOG_MOD_LOWSIGFOX  */ \
+								/*	| __LOG_MOD_STKSIGFOX  */ \
+								/*	| __LOG_MOD_STKLORA    */ \
+								/*	| __LOG_MOD_STIMER     */ \
 								/*	| __LOG_MOD_LOWLORADBG */ \
 								/*	| __LOG_MOD_LOWLORAINF */ \
+								/*	| __LOG_MOD_GNSS       */ \
+								/*	| __LOG_MOD_ACCEL	   */ \
 									)										// list the module to be activated in log see config_defines.h
 #define ITSDK_WITH_ERROR_RPT		__ENABLE								// Enable the Error reporting code. The allow to store error code in the EEPROM
 #define ITSDK_ERROR_USE_EPROM		__ENABLE								//  Error reports are stored in the EEPROM
@@ -98,8 +106,9 @@
 #define ITSDK_LOWPOWER_MOD			( __LOWPWR_MODE_STOP           \
 									| __LOWPWR_MODE_WAKE_RTC       \
 									| __LOWPWR_MODE_WAKE_GPIO      \
-									| __LOWPWR_MODE_WAKE_UART1     \
 								/*	| __LOWPWR_MODE_WAKE_LPUART */ \
+								/*	| __LOWPWR_MODE_WAKE_UART1  */ \
+									| __LOWPWR_MODE_WAKE_UART2  \
 									)										// Mode Stop + wakeup RTC + GPIO
 		                                                                    // UARTS WAKE Requires clk HSE/LSE and WakeInt Activated
 
@@ -109,14 +118,14 @@
 								/*	 | __LP_HALT_I2C1	*/				\
 								/*	 | __LP_HALT_I2C2	*/				\
 									 | __LP_HALT_SPI1					\
+								/*	 | __LP_HALT_SPI2	*/				\
 									 | __LP_HALT_TIM21 					\
 									 | __LP_HALT_ADC1 					\
-								/*	 | __LP_HALT_SPI2	*/				\
 									)										// extra module to stop during low power phase
 #define ITSDK_LOWPOWER_GPIO_A_KEEP	(  __LP_GPIO_NONE  \
 								    /*   | __LP_GPIO_1 */  /* LoRa RF Sw */ \
-									/*	 | __LP_GPIO_2 */  /* Uart2 */ 	\
-									/*	 | __LP_GPIO_3 */  /* Uart2 */ 	\
+										 | __LP_GPIO_2 	   /* Uart2 */ 	\
+										 | __LP_GPIO_3     /* Uart2 */ 	\
 									/*	 | __LP_GPIO_4 */  /* not used */	\
 										 | __LP_GPIO_5     /* Led2 / DIO4 */	\
 									/*	 | __LP_GPIO_6 */  /* spi1 */		\
@@ -213,7 +222,7 @@
 #define ITSDK_SECSTORE_CONSOLEKEY   "changeme"								// Default console passwd string (max 15 char)
 
 #define ITSDK_WITH_CONSOLE			__ENABLE								// Enable / Disable the Console feature
-#define ITSDK_CONSOLE_SERIAL		__UART_USART1							// Serial port to be used for console
+#define ITSDK_CONSOLE_SERIAL		__UART_USART2							// Serial port to be used for console
 #define ITSDK_CONSOLE_LINEBUFFER	40										// Max Size of a line in the console. Dropped after.
 #define ITSDK_CONSOLE_EXPIRE_S		300										// After 300 Seconds the console will lock automatically
 #define ITSKD_CONSOLE_COPYRIGHT		"(c) 2019 Paul Pinault\r\n"				// CHANGE ME : copyright string

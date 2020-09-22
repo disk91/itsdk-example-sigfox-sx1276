@@ -53,7 +53,7 @@
 #define ITSDK_SIGFOX_NVM_BASEADDR	0x600									// Base address in the NVM for sigfox lib
 #define ITSDK_SIGFOX_NVM_IDBASEADDR	0x200									// Base address in the NVM for EncUtils lib
 #define ITSDK_SIGFOX_LOWPOWER		0										// When 1 the device can be switch to low power by the sigfox lib
-#define ITSDK_SIGFOX_ID				0x00D206AF								// The device ID when NVM_SOURCE is HEADERS
+#define ITSDK_SIGFOX_ID				0x00000000								// The device ID when NVM_SOURCE is HEADERS
 #define ITSDK_SIGFOX_PAC			{ 0x00, 0x00, 0x00, 0x00, \
 									  0x00, 0x00, 0x00, 0x00 }				// The device PAC when NVM_SOURCE is HEADERS
 #define ITSDK_SIGFOX_KEY_TYPE		SIGFOX_KEY_PRIVATE						// Type of key to be used SIGFOX_KEY_PRIVATE / SIGFOX_KEY_PUBLIC
@@ -67,20 +67,16 @@
 #define ITSDK_SIGFOX_IF_TXRX_RCZ1 	500										// Interframe time for TX/RX frame
 #define ITSDK_SIGFOX_IF_TXRX_RCZ3 	50										// Interframe time for TX/RX frame
 
-#define ITSDK_SIGFOX_KEY			{ 0x42, 0x39, 0x45, 0x14, \
-									  0xF9, 0x90, 0x16, 0xC3, \
-									  0xA7, 0x33, 0x4A, 0x12, \
-									  0xCF, 0xFD, 0x4A, 0x2C }				// The device KEY when NVM_SOURCE is HEADERS
+#define ITSDK_SIGFOX_KEY			{ 0x00, 0x00, 0x00, 0x00, \
+									  0x00, 0x00, 0x00, 0x00, \
+									  0x00, 0x00, 0x00, 0x00, \
+									  0x00, 0x00, 0x00, 0x00 }				// The device KEY when NVM_SOURCE is HEADERS
 																			// The Key is in clear here
 #define ITSDK_SIGFOX_KEY_PUBLIC		{ 0x00, 0x11, 0x22, 0x33, \
 	                                  0x44, 0x55, 0x66, 0x77, \
                                       0x88, 0x99, 0xAA, 0xBB, \
 									  0xCC, 0xDD, 0xEE, 0xFF }				// The sigfox PUBLIC key (do not change this)
 
-#define ITSDK_SIGFOX_AUX			{ 0x00, 0x00, 0x00, 0x00, \
-									  0x00, 0x00, 0x00, 0x00, \
-									  0x00, 0x00, 0x00, 0x00, \
-									  0x00, 0x00, 0x00, 0x00 }				// The device AUX when NVM_SOURCE is HEADERS
 /*
 #define ITSDK_SIGFOX_PAC			{ 0x00, 0x00, 0x00, 0x00, \
 									  0x00, 0x00, 0x00, 0x00 }				// The device PAC when NVM_SOURCE is HEADERS
