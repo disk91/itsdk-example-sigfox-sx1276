@@ -106,7 +106,7 @@ To [obtain Sigfox credentials, read this post explaining the process to follow](
 	- Device KEY : 42394514F99016C3A7334A12CFFD4A2C
 	
 These credentials can be use for your tests but you won't be able to register them as the PAC is invalid.
-Now you can type in the console to setup your device (if you copy/paste, you need to add a delay between each char)
+Now you can type in the console to setup your device (if you copy/paste, you need to add a delay >= 300ms between each char)
 	* Configure radio for Europe: _SC:A:01_
 	* Configure PAC: _SC:C:0000000000000000_
 	* Configure KEY: _SS:2:42394514F99016C3A7334A12CFFD4A2C_
