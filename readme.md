@@ -105,16 +105,16 @@ To [obtain Sigfox credentials, read this post explaining the process to follow](
 	- Device PAC : 0000000000000000
 	- Device KEY : 42394514F99016C3A7334A12CFFD4A2C
 	
-	These credentials can be use for your tests but you won't be able to register them as the PAC is invalid.
-	Now you can type in the console to setup your device (if you copy/paste, you need to add a delay between each char)
+These credentials can be use for your tests but you won't be able to register them as the PAC is invalid.
+Now you can type in the console to setup your device (if you copy/paste, you need to add a delay between each char)
 	* Configure radio for Europe: _SC:A:01_
 	* Configure PAC: _SC:C:0000000000000000_
 	* Configure KEY: _SS:2:42394514F99016C3A7334A12CFFD4A2C_
 	* Configure DeviceId: _SC:D:00D206AF_
 	
-	For each of the command you should see *OK* printed
-	Now you can watch the pending configuration by typing _C_ command (Upper Case)
-	```
+For each of the command you should see *OK* printed
+Now you can watch the pending configuration by typing _C_ command (Upper Case)
+```
 	- sdk.version : 16
 	sdk.activeNetwork : 1
 	sdk.activeRegion : 0000
@@ -126,17 +126,17 @@ To [obtain Sigfox credentials, read this post explaining the process to follow](
 	sdk.sigfox.deviceId : 00D206AF 
 	sdk.sigfox.rssiCal : 0
 	[WARN] S 0x40000070
-	```
-	The Key is not accessible once set, so you can't verify it.
+```
+The Key is not accessible once set, so you can't verify it.
 
-	If corresponding you can apply this configuration by typing _S_ and get:
-	```
+If corresponding you can apply this configuration by typing _S_ and get:
+```
 	- [INFO] S 0x00000072
 	OK
 	/ Init Sigfox Stack success
 	| Tx completed <3
-	```
-	A first Sigfox transmission has been fired and you will get one new on every 10 minutes.
+```
+A first Sigfox transmission has been fired and you will get one new on every 10 minutes.
 
 
 ## General Usage
